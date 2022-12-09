@@ -1,0 +1,24 @@
+{
+    "ticker_records": [
+        {
+            "ticker": "AAPL",
+            "start_date": "2010-01-01",
+            "end_date": "2022-11-01"
+        },
+        {
+            "ticker": "GOOG",
+            "start_date": "2003-01-01",
+            "end_date": "2022-01-01"
+        },
+        {
+            "ticker": "AMZN",
+            "start_date": "2010-01-01",
+            "end_date": "2022-01-01"
+        },
+        {
+            "ticker": "META",
+            "start_date": "2010-01-01",
+            "end_date": "2022-11-01"
+        }
+    ]
+}
