@@ -16,15 +16,8 @@ def plot_ticker(ticker_name):
         error_code = 1
 
     if error_code == 0:
-        df = pd.read_sql("SELECT Date, Open, High, Low, Close FROM AAPL", conn)
-
-        fig=go.Figure()
-
-        fig.add_trace(go.Candlestick(x=df.index,
-                open=df['Open'],
-                high=df['High'],
-                low=df['Low'],
-                close=df['Close'], name = 'market data'))
+        data_to_plot = pd.read_sql("SELECT Date, Open, High, Low, Close FROM " + ticker_name, conn)
+        fig = px.line(data_to_plot, x='Date', y='High', title='Time Series with Range Slider and Selectors')
 
         fig.update_layout(
             yaxis_title='Stock Price (USD per Shares)')  
@@ -43,7 +36,6 @@ def plot_ticker(ticker_name):
             )
         fig.show()
 
- 
 def save_ticker_data(ticker_name, hist):
     conn = None
     try:
@@ -55,7 +47,7 @@ def save_ticker_data(ticker_name, hist):
 
 
 def save_ticker_metadata(ticker, st_date, fn_date):
-    with open("./metadata.json", 'r+') as metadata_file:
+    with open("metadata.json", 'r+') as metadata_file:
         metadata = json.load(metadata_file)
 
         ticker_exists = False
@@ -75,7 +67,7 @@ def save_ticker_metadata(ticker, st_date, fn_date):
 
 
 def check_ticker_data(ticker):
-    with open("./metadata.json", 'r+') as metadata_file:
+    with open("metadata.json", 'r+') as metadata_file:
         metadata = json.load(metadata_file)
 
         for i in metadata["ticker_records"]:
