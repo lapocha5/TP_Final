@@ -6,7 +6,7 @@ import yfinance as yf
 import sqlite3
 import json
 import plotly.graph_objects as go
-
+import plotly.express as px
 
 def plot_ticker(ticker_name):
     error_code = 0
@@ -16,12 +16,22 @@ def plot_ticker(ticker_name):
         error_code = 1
 
     if error_code == 0:
-        data_to_plot = pd.read_sql("SELECT Date, Open, High, Low, Close FROM " + ticker_name, conn)
-        fig = go.Figure(data=[go.Candlestick(x=data_to_plot['Date'],
-                                             open=data_to_plot['Open'],
-                                             high=data_to_plot['High'],
-                                             low=data_to_plot['Low'],
-                                             close=data_to_plot['Close'])])
+        df = pd.read_sql("SELECT Date, Open, High, Low, Close FROM AAPL", conn)
+
+        fig = px.line(df, x='Date', y='High', title='Time Series with Range Slider and Selectors')
+
+        fig.update_xaxes(
+            rangeslider_visible=True,
+                rangeselector=dict(
+                    buttons=list([
+                        dict(count=1, label="1m", step="month", stepmode="backward"),
+                        dict(count=6, label="6m", step="month", stepmode="backward"),
+                        dict(count=1, label="YTD", step="year", stepmode="todate"),
+                        dict(count=1, label="1y", step="year", stepmode="backward"),
+                        dict(step="all")
+                    ])
+                )
+            )
         fig.show()
 
  
@@ -36,7 +46,7 @@ def save_ticker_data(ticker_name, hist):
 
 
 def save_ticker_metadata(ticker, st_date, fn_date):
-    with open("metadata.json", 'r+') as metadata_file:
+    with open("./metadata.json", 'r+') as metadata_file:
         metadata = json.load(metadata_file)
 
         ticker_exists = False
@@ -56,7 +66,7 @@ def save_ticker_metadata(ticker, st_date, fn_date):
 
 
 def check_ticker_data(ticker):
-    with open("metadata.json", 'r+') as metadata_file:
+    with open("./metadata.json", 'r+') as metadata_file:
         metadata = json.load(metadata_file)
 
         for i in metadata["ticker_records"]:
