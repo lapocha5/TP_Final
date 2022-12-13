@@ -26,7 +26,6 @@ def plot_ticker(ticker_name):
             rangeslider_visible=True,
                 rangeselector=dict(
                     buttons=list([
-                        dict(count=1, label="15m", step="minute", stepmode="backward"),
                         dict(count=6, label="6m", step="month", stepmode="backward"),
                         dict(count=1, label="YTD", step="year", stepmode="todate"),
                         dict(count=1, label="1y", step="year", stepmode="backward"),
