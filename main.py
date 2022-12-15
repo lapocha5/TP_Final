@@ -17,13 +17,13 @@ def plot_ticker(ticker_name):
 
     if error_code == 0:
         data_to_plot = pd.read_sql("SELECT Date, Open, High, Low, Close FROM " + ticker_name, conn)
-        fig = px.line(data_to_plot, x='Date', y='High', title= 'Time Series with Range Slider and Selectors')
-
+        fig = px.line(data_to_plot, x='Date', y=['Open','High','Low','Close'], title= 'Time Series with Range Slider and Selectors')
+        
         fig.update_layout(
             yaxis_title='Stock Price (USD per Shares)')  
 
         fig.update_xaxes(
-            rangeslider_visible=True,
+            rangeslider_visible=False,
                 rangeselector=dict(
                     buttons=list([
                         dict(count=6, label="6m", step="month", stepmode="backward"),
