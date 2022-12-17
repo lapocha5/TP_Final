@@ -145,8 +145,8 @@ while not exit_command:
         if ticker_meta_data is None:
             print("No existe información de este ticker.")
         else:
-            print("Start date: " + ticker_meta_data["start_date"])
-            print("End date: " + ticker_meta_data["end_date"])
+            print("Fecha de Inicio: " + ticker_meta_data["start_date"])
+            print("Fecha de Finalización: " + ticker_meta_data["end_date"])
 
     elif user_command == 'display':
         ticker = input("Ingrese el ticker: ").upper()
