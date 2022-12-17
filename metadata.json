@@ -7,8 +7,8 @@
         },
         {
             "ticker": "GOOG",
-            "start_date": "2007-01-01",
-            "end_date": "2010-01-01"
+            "start_date": "2005-01-01",
+            "end_date": "2015-01-01"
         },
         {
             "ticker": "AMZN",
@@ -34,6 +34,16 @@
             "ticker": "NFLX",
             "start_date": "2010-01-01",
             "end_date": "2022-01-01"
+        },
+        {
+            "ticker": "DJI",
+            "start_date": "2019-01-01",
+            "end_date": "2022-01-01"
+        },
+        {
+            "ticker": "NYA",
+            "start_date": "2005-01-01",
+            "end_date": "2022-12-01"
         }
     ]
 }
