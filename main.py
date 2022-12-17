@@ -17,10 +17,10 @@ def plot_ticker(ticker_name):
 
     if error_code == 0:
         data_to_plot = pd.read_sql("SELECT Date, Open, High, Low, Close FROM " + ticker_name, conn)
-        fig = px.line(data_to_plot, x='Date', y=['Open','High','Low','Close'], title= 'Time Series with Range Slider and Selectors')
+        fig = px.line(data_to_plot, x='Date', y=['Open','High','Low','Close'], title= 'Serie Temporal con Selectores')
         
         fig.update_layout(
-            yaxis_title='Stock Price (USD per Shares)')  
+            yaxis_title='Precio de las acciones (USD por Acción)')  
 
         fig.update_xaxes(
             rangeslider_visible=False,
@@ -40,7 +40,7 @@ def save_ticker_data(ticker_name, hist):
     try:
         conn = sqlite3.connect("ticker_data.db")
     except:
-        print("Database is in use (I guess?), please close the file and try again.")
+        print("La Database esta en uso, por favor cierre el archivo y intente nuevamente.")
 
     hist.to_sql(ticker_name, conn, if_exists="replace")
 
@@ -95,14 +95,14 @@ def get_ticker_data(ticker, st_date, fn_date):
         elif period > max_years:
             error_code = 3
         else:
-            print("Fetching data...")
+            print("Recuperando información...")
             api_data = yf.Ticker(ticker)
             ticker_data = api_data.history(start=st_date, end=fn_date, debug=False)
             if len(ticker_data) == 0:
                 error_code = 1
 
         if error_code == 0:
-            print("Updating database...")
+            print("Actualizando base...")
 
             save_ticker_data(ticker, ticker_data)
 
@@ -113,47 +113,47 @@ def get_ticker_data(ticker, st_date, fn_date):
 
 def error_handling(error_code):
     if error_code == 1:
-        print("Ticker is invalid, please verify and enter again.")
+        print("El Ticker es invalido, favor de verificar e intentar nuevamente.")
     elif error_code == 2:
-        print("Dates are invalid, please verify and enter again.")
+        print("El Ticker es invalido, favor de verificar e intentar nuevamente.")
     elif error_code == 3:
-        print("The range requested exceeds the capabilities of this software, please enter a shorter date range.")
+        print("El rango elegido ha excedido las capacidades de este sistema, por favor ingrese un rango más corto.")
 
 
 exit_command = False
 
 while not exit_command:
-    user_command = input("Choose between 'get', 'check', and 'display' a ticker\n").lower()
+    user_command = input("Por favor elija entre: 'get', 'check' y 'display'\n").lower()
 
     if user_command == 'get':
-        ticker = input("Enter ticker: ").upper()
-        st_date = input("Enter start date (YYYY-MM-DD): ")
-        fn_date = input("Enter final date (YYYY-MM-DD): ")
+        ticker = input("Ingrese el ticker: ").upper()
+        st_date = input("Ingrese la fecha de inicio (YYYY-MM-DD): ")
+        fn_date = input("Ingrese la fecha de finalización (YYYY-MM-DD): ")
 
         get_error_code = get_ticker_data(ticker, st_date, fn_date)
         if get_error_code == 1:
-            print("Ticker is invalid, please verify and enter again.")
+            print("El Ticker es invalido, favor de verificar e intentar nuevamente.")
         elif get_error_code == 2:
-            print("Dates are invalid, please verify and enter again.")
+            print("El Ticker es invalido, favor de verificar e intentar nuevamente.")
         elif get_error_code == 3:
-            print("The range requested exceeds the capabilities of this software, please enter a shorter date range.")
+            print("El rango elegido ha excedido las capacidades de este sistema, por favor ingrese un rango más corto.")
 
     elif user_command == 'check':
-        ticker = input("Enter ticker: ").upper()
+        ticker = input("Ingrese el ticker: ").upper()
         ticker_meta_data = check_ticker_data(ticker)
 
         if ticker_meta_data is None:
-            print("No data has been gathered for that ticker yet.")
+            print("No existe información de este ticker.")
         else:
             print("Start date: " + ticker_meta_data["start_date"])
             print("End date: " + ticker_meta_data["end_date"])
 
     elif user_command == 'display':
-        ticker = input("Enter ticker: ").upper()
+        ticker = input("Ingrese el ticker: ").upper()
         ticker_meta_data = check_ticker_data(ticker)
 
         if ticker_meta_data is None:
-            print("No data has been gathered for that ticker yet.")
+            print("No existe información de este ticker.")
         else:
             plot_ticker(ticker)
 
@@ -161,6 +161,6 @@ while not exit_command:
         exit_command = True
 
     else:
-        print("Not a valid command.")
+        print("Comando Invalido.")
 
-print("Thank you for using our services, have a great day.")
+print("Gracias por utilizar nuestros servicios, que tenga un gran día.")
