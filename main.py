@@ -17,6 +17,7 @@ check_ticker = check_ticker_data
 get_ticker = get_ticker_data
 error = error_handling
 
+
 exit_command = False
 
 while not exit_command:
