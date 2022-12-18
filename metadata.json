@@ -44,6 +44,11 @@
             "ticker": "NYA",
             "start_date": "2005-01-01",
             "end_date": "2022-12-01"
+        },
+        {
+            "ticker": "SNAP",
+            "start_date": "2018-01-01",
+            "end_date": "2022-12-01"
         }
     ]
 }
